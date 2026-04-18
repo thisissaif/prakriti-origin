@@ -66,8 +66,13 @@ const Footer = () => {
           </div>
 
           <div className="footer__bottom">
-            <p>&copy; {new Date().getFullYear()} Prakriti Origin. All rights reserved.</p>
-            <p className="footer__made">Made with 🌿 in Uttarakhand</p>
+            <div>
+              <p>&copy; {new Date().getFullYear()} Prakriti Origin. All rights reserved.</p>
+              <p className="footer__made">Made with 🌿 in Uttarakhand</p>
+            </div>
+            <div className="footer__branding" style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', textAlign: 'center' }}>
+              Powered by <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#C8A951', fontWeight: 'bold', letterSpacing: '1px', textDecoration: 'none' }}>GREVINTECH</a>
+            </div>
           </div>
         </div>
       </div>
