@@ -1,0 +1,99 @@
+.order-confirmation {
+  min-height: 100vh;
+  background: var(--color-cream);
+  padding-top: 100px;
+  padding-bottom: var(--space-4xl);
+  display: flex;
+  align-items: center;
+}
+
+.order-confirmation__card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-3xl);
+  text-align: center;
+}
+
+.order-confirmation__icon {
+  color: var(--color-success);
+  margin-bottom: var(--space-lg);
+}
+
+.order-confirmation__card h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.order-confirmation__subtitle {
+  color: var(--color-text-light);
+  margin-bottom: var(--space-2xl);
+}
+
+.order-confirmation__details {
+  background: var(--color-off-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.order-confirmation__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 0.9rem;
+}
+
+.order-confirmation__row:last-child { border-bottom: none; }
+.order-confirmation__row span { color: var(--color-text-muted); }
+.order-confirmation__row strong { color: var(--color-primary); }
+
+.order-confirmation__items {
+  text-align: left;
+  margin-bottom: var(--space-lg);
+}
+
+.order-confirmation__items h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.order-confirmation__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.order-confirmation__item img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.order-confirmation__item div { flex: 1; }
+.order-confirmation__item h4 { font-size: 0.85rem; color: var(--color-primary); }
+.order-confirmation__item span { font-size: 0.78rem; color: var(--color-text-muted); }
+.order-confirmation__item > span:last-child { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
+
+.order-confirmation__contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.order-confirmation__contact a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
