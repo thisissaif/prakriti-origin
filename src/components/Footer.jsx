@@ -71,7 +71,7 @@ const Footer = () => {
               <p className="footer__made">Made with 🌿 in Uttarakhand</p>
             </div>
             <div className="footer__branding" style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', textAlign: 'center' }}>
-              Powered by <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#C8A951', fontWeight: 'bold', letterSpacing: '1px', textDecoration: 'none' }}>GREVINTECH</a>
+              Made with ❤️ by <a href="https://tech.grevin.in/" target="_blank" rel="noopener noreferrer" style={{ color: '#C8A951', fontWeight: 'bold', letterSpacing: '1px', textDecoration: 'none' }}>GREVINTECH</a>
             </div>
           </div>
         </div>
