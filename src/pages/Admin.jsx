@@ -128,8 +128,8 @@ const Admin = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="admin-login__logo">
-            <Leaf size={32} />
+          <div className="admin-login__logo" style={{ marginBottom: '15px' }}>
+            <img src="/logo.jpeg" alt="Prakriti Origin Logo" style={{ height: '60px', width: 'auto', borderRadius: '50%' }} />
           </div>
           <h2>Admin Panel</h2>
           <p>Prakriti Origin Management</p>
@@ -168,8 +168,8 @@ const Admin = () => {
     <div className="admin">
       {/* Sidebar */}
       <aside className="admin__sidebar">
-        <div className="admin__sidebar-logo">
-          <Leaf size={24} />
+        <div className="admin__sidebar-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src="/logo.jpeg" alt="Prakriti Origin" style={{ height: '40px', width: 'auto', borderRadius: '50%' }} />
           <div>
             <span>Prakriti</span>
             <small>Admin Panel</small>
@@ -204,9 +204,15 @@ const Admin = () => {
           </button>
         </nav>
 
-        <button className="admin__logout" onClick={handleLogout}>
-          <LogOut size={18} /> Logout
-        </button>
+        <div style={{ padding: '20px', borderTop: '1px solid var(--color-border)', textAlign: 'center' }}>
+          <button className="admin__logout" onClick={handleLogout} style={{ width: '100%', marginBottom: '15px' }}>
+            <LogOut size={18} /> Logout
+          </button>
+          <div style={{ fontSize: '0.85rem', color: 'var(--color-text-light)' }}>
+            Made with ❤️ by <br/>
+            <a href="https://tech.grevin.in/" target="_blank" rel="noopener noreferrer" style={{ color: '#C8A951', fontWeight: 'bold', textDecoration: 'none' }}>GREVINTECH</a>
+          </div>
+        </div>
       </aside>
 
       {/* Main Content */}
