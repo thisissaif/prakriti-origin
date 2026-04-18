@@ -1,17 +1,23 @@
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
+import * as api from '../utils/api';
 import './ContactSection.css';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    try {
+      await api.submitContactForm(formData);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 3000);
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch (err) {
+      alert('Failed to send message. Please try again later.');
+    }
   };
 
   return (

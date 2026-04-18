@@ -5,7 +5,7 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { setupDB, Product, Order, User } = require('./db');
+const { setupDB, Product, Order, User, Contact } = require('./db');
 
 dotenv.config();
 
@@ -54,7 +54,25 @@ app.put('/api/products/:id', authenticateJWT, async (req, res) => {
   }
 });
 
-// Orders API
+// Orders & Contact API
+app.post('/api/contact', async (req, res) => {
+  try {
+    await Contact.create(req.body);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Database update failed' });
+  }
+});
+
+app.get('/api/contact', authenticateJWT, async (req, res) => {
+  const messages = await Contact.find({}).sort({ date: -1 });
+  res.json(messages);
+});
+
+app.delete('/api/contact/:id', authenticateJWT, async (req, res) => {
+  await Contact.findByIdAndDelete(req.params.id);
+  res.json({ success: true });
+});
 app.post('/api/orders', async (req, res) => {
   const { items, total, shipping, customer, paymentMethod, paymentId, status } = req.body;
   const id = 'ORD-' + Date.now();

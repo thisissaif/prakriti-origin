@@ -36,6 +36,15 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+const contactSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  message: String,
+  date: { type: Date, default: Date.now }
+});
+const Contact = mongoose.model('Contact', contactSchema);
+
 async function setupDB() {
   const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/prakriti';
   // Use latest parser setup automatically handled by mongoose v6+
@@ -64,4 +73,4 @@ async function setupDB() {
   }
 }
 
-module.exports = { setupDB, Product, Order, User };
+module.exports = { setupDB, Product, Order, User, Contact };

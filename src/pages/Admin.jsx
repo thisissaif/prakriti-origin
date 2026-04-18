@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Package, ShoppingCart, LogOut, 
   TrendingUp, Users, IndianRupee, Eye, Trash2, 
   Check, X, Edit3, Save, Plus, Minus, Search,
-  Leaf
+  Leaf, MessageCircle
 } from 'lucide-react';
 import * as api from '../utils/api';
 import './Admin.css';
@@ -17,6 +17,7 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [orders, setOrders] = useState([]);
   const [productList, setProductList] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -30,8 +31,18 @@ const Admin = () => {
     if (authenticated) {
       loadOrders();
       loadProducts();
+      loadMessages();
     }
   }, [authenticated]);
+
+  const loadMessages = async () => {
+    try {
+      const data = await api.fetchMessages();
+      setMessages(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const loadOrders = async () => {
     try {
@@ -184,6 +195,12 @@ const Admin = () => {
             onClick={() => setActiveTab('products')}
           >
             <Package size={18} /> Products
+          </button>
+          <button
+            className={`admin__nav-item ${activeTab === 'messages' ? 'active' : ''}`}
+            onClick={() => setActiveTab('messages')}
+          >
+            <MessageCircle size={18} /> Messages
           </button>
         </nav>
 
@@ -387,6 +404,39 @@ const Admin = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Messages */}
+        {activeTab === 'messages' && (
+          <div className="admin__orders">
+            <div className="admin__orders-header">
+              <h2>Contact Messages</h2>
+            </div>
+            {messages.length === 0 ? (
+              <p className="admin__empty">No messages found</p>
+            ) : (
+              <div className="admin__orders-list">
+                {messages.map(msg => (
+                  <div key={msg._id} className="admin__order-card">
+                    <div className="admin__order-header">
+                      <div>
+                        <strong>{msg.name}</strong>
+                        <span className="admin__order-date">
+                          {new Date(msg.date).toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="admin__order-customer">
+                      <p>{msg.phone} • {msg.email}</p>
+                    </div>
+                    <div className="admin__order-items">
+                      <p style={{ marginTop: '10px', fontSize: '0.95rem', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>{msg.message}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </main>
