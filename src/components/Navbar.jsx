@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Leaf } from 'lucide-react';
+import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
@@ -33,10 +33,8 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__container container">
-        <Link to="/" className="navbar__logo">
-          <div className="navbar__logo-icon">
-            <Leaf size={24} />
-          </div>
+        <Link to="/" className="navbar__logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src="/logo.jpeg" alt="Prakriti Origin Logo" style={{ height: '40px', width: 'auto', borderRadius: '50%' }} />
           <div className="navbar__logo-text">
             <span className="navbar__brand">Prakriti</span>
             <span className="navbar__brand-sub">Origin</span>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Leaf, Phone, Mail, MapPin, Share2, Globe, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Share2, Globe, MessageCircle } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -19,8 +19,8 @@ const Footer = () => {
         <div className="container">
           <div className="footer__grid">
             <div className="footer__brand">
-              <div className="footer__logo">
-                <div className="footer__logo-icon"><Leaf size={20} /></div>
+              <div className="footer__logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <img src="/logo.jpeg" alt="Prakriti Origin Logo" style={{ height: '36px', width: 'auto', borderRadius: '50%' }} />
                 <div>
                   <span className="footer__brand-name">Prakriti</span>
                   <span className="footer__brand-sub">Origin</span>
