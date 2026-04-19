@@ -338,3 +338,9 @@ input, textarea, select {
 .page-transition {
   animation: fadeInUp 0.4s ease;
 }
+
+@media (max-width: 600px) {
+  .section {
+    padding: 2rem 0;
+  }
+}
