@@ -46,6 +46,7 @@ const Navbar = () => {
           <button onClick={() => scrollToSection('products')} className="navbar__link">Products</button>
           <button onClick={() => scrollToSection('about')} className="navbar__link">About</button>
           <button onClick={() => scrollToSection('benefits')} className="navbar__link">Benefits</button>
+          <Link to="/track" className="navbar__link" onClick={() => setMenuOpen(false)}>Track Order</Link>
           <button onClick={() => scrollToSection('contact')} className="navbar__link">Contact</button>
         </div>
 

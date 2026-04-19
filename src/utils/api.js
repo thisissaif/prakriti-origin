@@ -113,3 +113,9 @@ export const markMessageRead = async (id) => {
   });
   return response.json();
 };
+
+export const trackOrder = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/orders/${id}`);
+  if (!response.ok) throw new Error('Order not found');
+  return response.json();
+};

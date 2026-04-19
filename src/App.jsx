@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
+import TrackOrder from './pages/TrackOrder';
 import Admin from './pages/Admin';
 import { CheckCircle } from 'lucide-react';
 
@@ -45,6 +46,7 @@ const AppLayout = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/track" element={<TrackOrder />} />
       </Routes>
       <Footer />
     </>

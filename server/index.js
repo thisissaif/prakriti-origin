@@ -96,6 +96,26 @@ app.get('/api/orders', authenticateJWT, async (req, res) => {
   res.json(orders);
 });
 
+app.get('/api/orders/:id', async (req, res) => {
+  try {
+    const order = await Order.findOne({ id: req.params.id });
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    
+    // Only return non-sensitive fields to public
+    const publicOrder = {
+      id: order.id,
+      status: order.status,
+      date: order.date,
+      items: order.items,
+      total: order.total,
+      paymentMethod: order.paymentMethod
+    };
+    res.json(publicOrder);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch order' });
+  }
+});
+
 app.put('/api/orders/:id/status', authenticateJWT, async (req, res) => {
   const { status } = req.body;
   await Order.findOneAndUpdate({ id: req.params.id }, { status });
