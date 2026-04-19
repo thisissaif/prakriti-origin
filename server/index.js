@@ -101,7 +101,6 @@ app.get('/api/orders/:id', async (req, res) => {
     const order = await Order.findOne({ id: req.params.id });
     if (!order) return res.status(404).json({ error: 'Order not found' });
     
-    // Only return non-sensitive fields to public
     const publicOrder = {
       id: order.id,
       status: order.status,
@@ -113,6 +112,32 @@ app.get('/api/orders/:id', async (req, res) => {
     res.json(publicOrder);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch order' });
+  }
+});
+
+app.get('/api/orders/lookup/:creds', async (req, res) => {
+  try {
+    const creds = req.params.creds;
+    // Find matching phone or email
+    const orders = await Order.find({
+      $or: [
+        { 'customer.email': creds },
+        { 'customer.phone': creds }
+      ]
+    }).sort({ date: -1 });
+
+    const publicOrders = orders.map(order => ({
+      id: order.id,
+      status: order.status,
+      date: order.date,
+      items: order.items,
+      total: order.total,
+      paymentMethod: order.paymentMethod
+    }));
+    
+    res.json(publicOrders);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to lookup orders' });
   }
 });
 

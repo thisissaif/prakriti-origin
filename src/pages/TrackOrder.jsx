@@ -5,24 +5,38 @@ import * as api from '../utils/api';
 import './TrackOrder.css';
 
 const TrackOrder = () => {
+  const [method, setMethod] = useState('id');
   const [orderId, setOrderId] = useState('');
+  const [credentials, setCredentials] = useState('');
   const [orderData, setOrderData] = useState(null);
+  const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleTrack = async (e) => {
     e.preventDefault();
-    if (!orderId.trim()) return;
-    
     setLoading(true);
     setError('');
     setOrderData(null);
+    setOrderList([]);
     
     try {
-      const data = await api.trackOrder(orderId.trim());
-      setOrderData(data);
+      if (method === 'id') {
+        if (!orderId.trim()) return setLoading(false);
+        const data = await api.trackOrder(orderId.trim());
+        setOrderData(data);
+      } else {
+        if (!credentials.trim()) return setLoading(false);
+        const dataList = await api.lookupOrders(credentials.trim());
+        if (dataList.length === 0) {
+          setError('No orders found for this Phone or Email.');
+        } else {
+          if (dataList.length === 1) setOrderData(dataList[0]);
+          else setOrderList(dataList);
+        }
+      }
     } catch(err) {
-      setError('Order not found. Please check your Order ID.');
+      setError('Could not find order. Please verify your details.');
     } finally {
       setLoading(false);
     }
@@ -49,7 +63,7 @@ const TrackOrder = () => {
         >
           <h1 className="section-title">Track Your Order</h1>
           <div className="gold-divider" />
-          <p className="section-subtitle">Enter your Order ID below to track your delivery status.</p>
+          <p className="section-subtitle">Find your order delivery status instantly.</p>
         </motion.div>
 
         <motion.div 
@@ -58,22 +72,58 @@ const TrackOrder = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <form onSubmit={handleTrack} className="track-order__form">
+          <div className="track-order__tabs">
+            <button className={`btn-tab ${method === 'id' ? 'active' : ''}`} onClick={() => setMethod('id')}>By Order ID</button>
+            <button className={`btn-tab ${method === 'creds' ? 'active' : ''}`} onClick={() => setMethod('creds')}>By Phone / Email</button>
+          </div>
+          
+          <form onSubmit={handleTrack} className="track-order__form" style={{ marginTop: '1.5rem' }}>
             <div className="track-order__input-wrapper">
               <Search className="track-order__search-icon" size={20} />
-              <input 
-                type="text" 
-                placeholder="e.g., ORD-1712435..." 
-                value={orderId} 
-                onChange={(e) => setOrderId(e.target.value)} 
-              />
+              {method === 'id' ? (
+                <input 
+                  type="text" 
+                  placeholder="e.g., ORD-1712435..." 
+                  value={orderId} 
+                  onChange={(e) => setOrderId(e.target.value)} 
+                />
+              ) : (
+                <input 
+                  type="text" 
+                  placeholder="Enter Phone Number or Email..." 
+                  value={credentials} 
+                  onChange={(e) => setCredentials(e.target.value)} 
+                />
+              )}
             </div>
             <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Searching...' : 'Track Order'}
+              {loading ? 'Searching...' : 'Search'}
             </button>
           </form>
           {error && <p className="track-order__error">{error}</p>}
         </motion.div>
+
+        {orderList.length > 0 && !orderData && (
+          <motion.div 
+            className="track-order__list glass-card"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h3 style={{marginBottom: '1rem', color: 'var(--color-primary)'}}>Your Recent Orders</h3>
+            <div className="track-order__list-container">
+              {orderList.map(o => (
+                <div key={o.id} className="track-order__list-item" onClick={() => setOrderData(o)}>
+                  <div>
+                    <strong>{o.id}</strong> 
+                    <span className="date">{new Date(o.date).toLocaleString()}</span>
+                  </div>
+                  <div className={`status status--${o.status}`}>{o.status}</div>
+                  <div className="price">₹{o.total}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {orderData && (
           <motion.div 
@@ -81,6 +131,11 @@ const TrackOrder = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
+            {orderList.length > 1 && (
+               <button className="btn-tab" style={{marginBottom:'1rem', color:'var(--color-primary)'}} onClick={() => setOrderData(null)}>
+                 &larr; Back to Order List
+               </button>
+            )}
             <div className="track-order__info">
               <h3>Order <span>{orderData.id}</span></h3>
               <p>Placed on: {new Date(orderData.date).toLocaleString()}</p>

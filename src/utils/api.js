@@ -119,3 +119,9 @@ export const trackOrder = async (id) => {
   if (!response.ok) throw new Error('Order not found');
   return response.json();
 };
+
+export const lookupOrders = async (creds) => {
+  const response = await fetch(`${API_BASE_URL}/orders/lookup/${encodeURIComponent(creds)}`);
+  if (!response.ok) throw new Error('Failed to lookup orders');
+  return response.json();
+};
