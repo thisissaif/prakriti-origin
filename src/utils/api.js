@@ -78,3 +78,29 @@ export const verifyPayment = async (data) => {
   });
   return response.json();
 };
+
+export const submitContactForm = async (formData) => {
+  const response = await fetch(`${API_BASE_URL}/contact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  });
+  return response.json();
+};
+
+export const fetchMessages = async () => {
+  const token = sessionStorage.getItem('prakriti-token');
+  const response = await fetch(`${API_BASE_URL}/contact`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.json();
+};
+
+export const deleteMessage = async (id) => {
+  const token = sessionStorage.getItem('prakriti-token');
+  const response = await fetch(`${API_BASE_URL}/contact/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.json();
+};
