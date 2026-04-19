@@ -69,6 +69,11 @@ app.get('/api/contact', authenticateJWT, async (req, res) => {
   res.json(messages);
 });
 
+app.put('/api/contact/:id/read', authenticateJWT, async (req, res) => {
+  await Contact.findByIdAndUpdate(req.params.id, { isRead: true });
+  res.json({ success: true });
+});
+
 app.delete('/api/contact/:id', authenticateJWT, async (req, res) => {
   await Contact.findByIdAndDelete(req.params.id);
   res.json({ success: true });

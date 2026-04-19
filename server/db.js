@@ -41,7 +41,8 @@ const contactSchema = new mongoose.Schema({
   email: String,
   phone: String,
   message: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  isRead: { type: Boolean, default: false }
 });
 const Contact = mongoose.model('Contact', contactSchema);
 

@@ -104,3 +104,12 @@ export const deleteMessage = async (id) => {
   });
   return response.json();
 };
+
+export const markMessageRead = async (id) => {
+  const token = sessionStorage.getItem('prakriti-token');
+  const response = await fetch(`${API_BASE_URL}/contact/${id}/read`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.json();
+};

@@ -44,6 +44,15 @@ const Admin = () => {
     }
   };
 
+  const markMessageRead = async (id) => {
+    try {
+      await api.markMessageRead(id);
+      setMessages(messages.map(m => m._id === id ? { ...m, isRead: true } : m));
+    } catch (e) {
+      alert('Failed to mark message as read');
+    }
+  };
+
   const loadOrders = async () => {
     try {
       const data = await api.fetchOrders();
@@ -158,6 +167,7 @@ const Admin = () => {
   const totalOrders = orders.length;
   const pendingOrders = orders.filter(o => o.status === 'pending').length;
   const confirmedOrders = orders.filter(o => o.status === 'confirmed' || o.status === 'delivered').length;
+  const unreadMessages = messages.filter(m => !m.isRead).length;
 
   const filteredOrders = orders.filter(o => 
     o.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -201,6 +211,7 @@ const Admin = () => {
             onClick={() => setActiveTab('messages')}
           >
             <MessageCircle size={18} /> Messages
+            {unreadMessages > 0 && <span className="admin__badge">{unreadMessages}</span>}
           </button>
         </nav>
 
@@ -424,10 +435,10 @@ const Admin = () => {
             ) : (
               <div className="admin__orders-list">
                 {messages.map(msg => (
-                  <div key={msg._id} className="admin__order-card">
+                  <div key={msg._id} className="admin__order-card" style={{ borderLeft: msg.isRead ? 'none' : '4px solid var(--color-accent)' }}>
                     <div className="admin__order-header">
                       <div>
-                        <strong>{msg.name}</strong>
+                        <strong>{msg.name}</strong> {!msg.isRead && <span className="admin__badge" style={{position:'static', marginLeft:'10px', padding:'2px 6px'}}>NEW</span>}
                         <span className="admin__order-date">
                           {new Date(msg.date).toLocaleString()}
                         </span>
@@ -439,6 +450,13 @@ const Admin = () => {
                     <div className="admin__order-items">
                       <p style={{ marginTop: '10px', fontSize: '0.95rem', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>{msg.message}</p>
                     </div>
+                    {!msg.isRead && (
+                      <div className="admin__order-footer" style={{ marginTop: '15px' }}>
+                        <button className="btn btn-primary" onClick={() => markMessageRead(msg._id)}>
+                          <Check size={16} style={{marginRight: '5px'}}/> Mark as Seen
+                        </button>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
