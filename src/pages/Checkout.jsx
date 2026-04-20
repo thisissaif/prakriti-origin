@@ -30,7 +30,7 @@ const Checkout = () => {
       const orderRes = await api.createRazorpayOrder(grandTotal);
       
       const options = {
-        key: 'rzp_test_placeholder', // Should come from config in a real app
+        key: 'rzp_live_SfmGnayZWt9bbo',
         amount: grandTotal * 100,
         currency: 'INR',
         name: 'Prakriti Origin',
